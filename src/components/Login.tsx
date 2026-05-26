@@ -8,38 +8,44 @@ export default function Login({
 }: Props) {
 const usuarios = [
 
-  {
-    nome: 'Carlos',
-    login: 'expedicao1',
-    senha: 'expedicao10',
-    role: 'operador'
-  },
+ {
+  nome: 'Carlos',
+  login: 'Carlos',
+  senha: 'expedicao1',
+  role: 'operador'
+},
 
   {
     nome: 'Pedro',
-    login: 'expedicao2',
-    senha: 'expedicao10',
+    login: 'Pedro',
+    senha: 'expedicao2',
     role: 'operador'
   },
 
   {
     nome: 'Romulo Ajalla',
-    login: 'expedicao3',
-    senha: 'expedicao10',
+    login: 'RomuloAjalla',
+    senha: 'expedicao3',
     role: 'operador'
   },
 
   {
     nome: 'Romulo Pereira',
-    login: 'expedicao4',
-    senha: 'expedicao10',
+    login: 'RomuloPereira',
+    senha: 'expedicao4',
     role: 'operador'
   },
+  {
+  nome: 'Romario',
+  login: 'Romario',
+  senha: 'expedicao6',
+  role: 'operador'
+},
 
   {
     nome: 'William',
-    login: 'expedicao5',
-    senha: 'expedicao10',
+    login: 'William',
+    senha: 'expedicao5',
     role: 'operador'
   },
 
@@ -51,7 +57,7 @@ const usuarios = [
   }
 
 ];
-  const [usuario, setUsuario] = useState('expedicao1');
+  const [usuario, setUsuario] = useState('Carlos');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
@@ -138,31 +144,36 @@ onLogin(usuarioEncontrado);
   className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
 >
 
-  <option value="expedicao1">
+  <option value="Carlos">
 
-    Carlos
+  Carlos
 
-  </option>
+</option>
 
-  <option value="expedicao2">
+  <option value="Pedro">
 
     Pedro
 
   </option>
+  <option value="Romario">
 
-  <option value="expedicao3">
+  Romario
+
+</option>
+
+  <option value="RomuloAjalla">
 
     Romulo Ajalla
 
   </option>
 
-  <option value="expedicao4">
+  <option value="RomuloPereira">
 
     Romulo Pereira
 
   </option>
 
-  <option value="expedicao5">
+  <option value="William">
 
     William
 
