@@ -28,7 +28,8 @@ export default function RegistroTable({
         'Placa',
         'OC',
         'Status',
-        'Observação'
+        'Observação',
+        'Data'
       ],
 
       ...registros.map((registro) => [
@@ -37,7 +38,13 @@ export default function RegistroTable({
         registro.placa,
         registro.oc,
         registro.status,
-        registro.observacao
+registro.observacao,
+
+registro.createdAt
+  ? registro.createdAt
+      .toDate()
+      .toLocaleString('pt-BR')
+  : '--'
 
       ])
 
@@ -80,7 +87,7 @@ export default function RegistroTable({
 
   return (
 
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/40 p-6 hover:shadow-2xl transition-all duration-300">
 
       <div className="flex items-center justify-between mb-6">
 
@@ -92,7 +99,7 @@ export default function RegistroTable({
 
         <button
           onClick={exportarCSV}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+          className="bg-green-600 hover:bg-green-700 hover:scale-105 text-white px-4 py-2 rounded-2xl transition-all duration-300 shadow-lg"
         >
 
           Exportar CSV
@@ -103,18 +110,19 @@ export default function RegistroTable({
 
       <div className="overflow-x-auto">
 
-        <table className="w-full">
+        <table className="w-full min-w-[900px]">
 
           <thead>
 
             <tr className="border-b border-slate-200 text-left">
 
-              <th className="py-3">Foto</th>
+             <th className="py-3">Foto</th>
               <th className="py-3">Operador</th>
               <th className="py-3">Placa</th>
               <th className="py-3">OC</th>
               <th className="py-3">Status</th>
-              <th className="py-3">Observação</th>
+              <th className="py-3 hidden md:table-cell">Observação</th>
+              <th className="py-3 whitespace-nowrap">Data</th>
               <th className="py-3">Ações</th>
 
             </tr>
@@ -144,36 +152,35 @@ export default function RegistroTable({
 
               <tr
                 key={index}
-                className="border-b border-slate-100"
+                className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
               >
 
-                <td className="py-4">
+                <td className="py-2">
 
                   {registro.imagem && (
 
                     <img
                       src={registro.imagem}
                       onClick={() => setImagemModal(registro.imagem)}
-                      className="w-16 h-16 object-cover rounded-xl border border-slate-200 cursor-pointer hover:scale-105 transition-transform"
+                      className="w-14 h-14 md:w-20 md:h-20 object-cover rounded-2xl border border-slate-200 cursor-pointer hover:scale-105 transition-transform shadow-sm"
                     />
 
                   )}
 
                 </td>
 
-                <td className="py-4 font-semibold text-slate-700">
-
+                <td className="py-3 text-sm md:text-lg font-bold text-slate-700 whitespace-nowrap">
                   {registro.operador}
 
                 </td>
 
-                <td className="py-4 font-semibold">
+                <td className="py-3 text-base md:text-lg font-bold text-slate-800 whitespace-nowrap">
 
                   {registro.placa}
 
                 </td>
 
-                <td>
+                <td className="font-medium text-slate-700">
 
                   {registro.oc}
 
@@ -182,34 +189,46 @@ export default function RegistroTable({
                 <td>
 
                   <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                    className={`px-3 py-2 rounded-full text-sm font-semibold shadow-sm ${
                       registro.status === 'Concluído'
                         ? 'bg-green-100 text-green-700'
                         : 'bg-yellow-100 text-yellow-700'
                     }`}
                   >
 
-                    {registro.status}
+                    {registro.status === 'Concluído'
+                      ? ' Concluído'
+                      : ' Pendente'}
 
                   </span>
 
                 </td>
 
-                <td className="text-slate-600">
+                <td className="text-slate-600 hidden md:table-cell">
 
                   {registro.observacao}
 
                 </td>
 
-                <td>
+                <td className="text-sm text-slate-600 whitespace-nowrap">
 
-                  {(
+  {registro.createdAt
+    ? registro.createdAt
+        .toDate()
+        .toLocaleString('pt-BR')
+    : '--'}
 
-                    registro.operador === usuarioLogado.nome ||
+</td>
 
-                    usuarioLogado.role === 'admin'
+<td>
 
-                  ) && (
+  {(
+
+    registro.operador === usuarioLogado.nome ||
+
+    usuarioLogado.role === 'admin'
+
+  ) &&  (
 
                     <button
 
@@ -227,11 +246,10 @@ export default function RegistroTable({
 
                       }}
 
-                      className="bg-red-100 hover:bg-red-200 text-red-600 px-3 py-2 rounded-lg font-bold transition-colors"
+                      className="bg-red-100 hover:bg-red-200 hover:scale-105 text-red-600 px-3 py-2 rounded-xl font-bold transition-all duration-300 shadow-sm"
                     >
 
-                      X
-
+                      ✕
                     </button>
 
                   )}
@@ -251,13 +269,13 @@ export default function RegistroTable({
       {imagemModal && (
 
         <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-6"
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-6 backdrop-blur-sm"
           onClick={() => setImagemModal('')}
         >
 
           <img
             src={imagemModal}
-            className="max-w-5xl max-h-[90vh] rounded-2xl shadow-2xl"
+            className="max-w-5xl max-h-[90vh] rounded-3xl shadow-2xl border border-white/20"
           />
 
         </div>

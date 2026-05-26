@@ -8,30 +8,35 @@ type Props = {
 export default function RegistroForm({
   adicionarRegistro,
   usuarioLogado
-}: Props){
+}: Props) {
 
   const [placa, setPlaca] = useState('');
   const [oc, setOc] = useState('');
   const [status, setStatus] = useState('Concluído');
   const [observacao, setObservacao] = useState('');
-const [imagem, setImagem] = useState('');
+  const [imagem, setImagem] = useState('');
+
   const handleSubmit = (e: any) => {
 
     e.preventDefault();
 
     adicionarRegistro({
-        operador: usuarioLogado.nome,
-  placa,
-  oc,
-  status,
-  observacao,
-  imagem
-});
+
+      operador: usuarioLogado.nome,
+
+      placa,
+      oc,
+      status,
+      observacao,
+      imagem
+
+    });
 
     setPlaca('');
     setOc('');
     setStatus('Concluído');
     setObservacao('');
+    setImagem('');
 
   };
 
@@ -39,24 +44,8 @@ const [imagem, setImagem] = useState('');
 
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"
+      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/40 p-6 hover:shadow-2xl transition-all duration-300"
     >
-
-      <div className="flex items-center gap-2 mb-6">
-
-        <div className="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center font-bold">
-
-          +
-
-        </div>
-
-        <h2 className="text-2xl font-bold text-slate-800">
-
-          Novo Registo
-
-        </h2>
-
-      </div>
 
       <div className="space-y-5">
 
@@ -70,12 +59,16 @@ const [imagem, setImagem] = useState('');
 
           </label>
 
-          <input
-            type="text"
-            value={placa}
-            onChange={(e) => setPlaca(e.target.value)}
-            placeholder="ABC-1234"
-            className="w-full p-4 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+  <input
+  type="text"
+  value={placa}
+  onChange={(e) =>
+
+    setPlaca(e.target.value.toUpperCase())
+
+  }
+  placeholder="ABC-1234"
+            className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg uppercase"
           />
 
         </div>
@@ -95,7 +88,7 @@ const [imagem, setImagem] = useState('');
             value={oc}
             onChange={(e) => setOc(e.target.value)}
             placeholder="Nº da OC"
-            className="w-full p-4 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
           />
 
         </div>
@@ -113,7 +106,7 @@ const [imagem, setImagem] = useState('');
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="w-full p-4 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
           >
 
             <option>Concluído</option>
@@ -138,7 +131,7 @@ const [imagem, setImagem] = useState('');
             value={observacao}
             onChange={(e) => setObservacao(e.target.value)}
             placeholder="Ex: caminhão veio sujo..."
-            className="w-full p-4 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
           />
 
         </div>
@@ -153,7 +146,7 @@ const [imagem, setImagem] = useState('');
 
           </label>
 
-          <label className="border-2 border-dashed border-slate-300 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 transition-colors">
+          <label className="border-2 border-dashed border-slate-300 rounded-3xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-all duration-300">
 
             <div className="text-5xl mb-4">
 
@@ -161,100 +154,101 @@ const [imagem, setImagem] = useState('');
 
             </div>
 
-            <span className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold">
+            <span className="bg-blue-100 text-blue-600 px-4 py-2 rounded-xl font-semibold">
 
               Carregar fotografia
 
             </span>
 
             <span className="text-sm text-slate-500 mt-3">
-                {imagem && (
-
-  <div className="mt-4 flex flex-col items-center animate-pulse">
-
-    <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold text-sm">
-
-      ✅ Fotografia carregada
-
-    </div>
-
-    <img
-      src={imagem}
-      className="mt-4 w-40 h-40 object-cover rounded-2xl border border-slate-200 shadow-sm"
-    />
-
-  </div>
-
-)}
 
               PNG, JPG até 10MB
 
             </span>
 
             <input
-  type="file"
-  className="hidden"
-  accept="image/*"
-  onChange={(e: any) => {
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={(e: any) => {
 
-    const file = e.target.files[0];
+                const file = e.target.files[0];
 
-    if (!file) return;
+                if (!file) return;
 
-    const reader = new FileReader();
+                const reader = new FileReader();
 
-reader.onloadend = () => {
+                reader.onloadend = () => {
 
-  const img = new Image();
+                  const img = new Image();
 
-  img.src = reader.result as string;
+                  img.src = reader.result as string;
 
-  img.onload = () => {
+                  img.onload = () => {
 
-    const canvas = document.createElement('canvas');
+                    const canvas = document.createElement('canvas');
 
-    const maxWidth = 600;
+                    const maxWidth = 600;
 
-    const scaleSize = maxWidth / img.width;
+                    const scaleSize = maxWidth / img.width;
 
-    canvas.width = maxWidth;
+                    canvas.width = maxWidth;
 
-    canvas.height = img.height * scaleSize;
+                    canvas.height = img.height * scaleSize;
 
-    const ctx = canvas.getContext('2d');
+                    const ctx = canvas.getContext('2d');
 
-    ctx?.drawImage(
-      img,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+                    ctx?.drawImage(
+                      img,
+                      0,
+                      0,
+                      canvas.width,
+                      canvas.height
+                    );
 
-    const compressedBase64 = canvas.toDataURL(
-      'image/jpeg',
-      0.7
-    );
+                    const compressedBase64 = canvas.toDataURL(
+                      'image/jpeg',
+                      0.7
+                    );
 
-    setImagem(compressedBase64);
+                    setImagem(compressedBase64);
 
-  };
+                  };
 
-};
+                };
 
-reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
 
-  }}
-/>
+              }}
+            />
 
           </label>
+
+          {imagem && (
+
+            <div className="mt-4 flex flex-col items-center animate-pulse">
+
+              <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold text-sm">
+
+                ✅ Fotografia carregada
+
+              </div>
+
+              <img
+                src={imagem}
+                className="mt-4 w-40 h-40 object-cover rounded-3xl border border-slate-200 shadow-lg"
+              />
+
+            </div>
+
+          )}
 
         </div>
 
         {/* BOTÃO */}
 
         <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors"
+          className="w-full bg-blue-600 hover:bg-blue-700 hover:scale-[1.02] text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg"
         >
 
           Guardar Expedição

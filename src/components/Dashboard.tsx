@@ -87,11 +87,11 @@ onLogout
 
   return (
 
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300">
 
       {/* HEADER */}
 
-      <header className="bg-white border-b border-slate-200">
+      <header className="bg-slate-900 border-b border-slate-800 shadow-2xl">
 
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
@@ -108,13 +108,13 @@ onLogout
 
             <div>
 
-              <h1 className="text-2xl font-bold text-slate-800">
+              <h1 className="text-2xl font-bold text-white">
 
                 Logística
 
               </h1>
 
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-400 text-sm">
 
                 Expedição
 
@@ -124,28 +124,37 @@ onLogout
 
           </div>
 
-          <div className="text-sm text-slate-600">
+          <div className="flex items-center gap-4">
 
-            Sessão iniciada como
-            <button
+  <div className="flex items-center gap-3">
 
-  onClick={onLogout}
+    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-lg">
 
-  className="ml-4 bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+      👤
 
->
+    </div>
 
-  Sair
+    <p className="font-bold text-white">
 
-</button>
+      {usuarioLogado.nome}
 
-            <span className="font-bold text-slate-800 ml-1">
+    </p>
 
-              {usuarioLogado.nome}
+  </div>
 
-            </span>
+  <button
 
-          </div>
+    onClick={onLogout}
+
+    className="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-sm"
+
+  >
+
+    Sair
+
+  </button>
+
+</div>
 
         </div>
 
