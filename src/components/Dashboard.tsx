@@ -17,7 +17,10 @@ export default function Dashboard({
 onLogout
 }: Props) {
 
-  const [periodo, setPeriodo] = useState('Hoje');
+  const [dataInicio, setDataInicio] = useState('');
+const [dataFim, setDataFim] = useState('');
+const [filtroStatus, setFiltroStatus] = useState('');
+const [filtroOperador, setFiltroOperador] = useState('');
 
   const totalConcluidos = registros.filter(
     (registro) => registro.status === 'Concluído'
@@ -26,48 +29,77 @@ onLogout
   const totalPendentes = registros.filter(
     (registro) => registro.status === 'Pendente'
   ).length;
+  const totalNaoCarregados = registros.filter(
+  (registro) => registro.status === 'Não Carregado'
+).length;
 
-  const registrosFiltrados = registros.filter((registro) => {
+ const registrosFiltrados = registros
 
-    if (!registro.createdAt) return false;
+  .filter((registro) => {
 
-    const data = registro.createdAt.toDate();
+    if (!registro.createdAt) return true;
 
-    const agora = new Date();
+    const dataRegistro = registro.createdAt.toDate();
 
-    if (periodo === 'Hoje') {
+    if (dataInicio) {
 
-      return (
+      const inicio = new Date(dataInicio);
 
-        data.getDate() === agora.getDate() &&
-        data.getMonth() === agora.getMonth() &&
-        data.getFullYear() === agora.getFullYear()
+      if (dataRegistro < inicio) {
 
-      );
+        return false;
 
-    }
-
-    if (periodo === '7 Dias') {
-
-      const seteDias = new Date();
-
-      seteDias.setDate(agora.getDate() - 7);
-
-      return data >= seteDias;
+      }
 
     }
 
-    if (periodo === '30 Dias') {
+    if (dataFim) {
 
-      const trintaDias = new Date();
+      const fim = new Date(dataFim);
 
-      trintaDias.setDate(agora.getDate() - 30);
+      fim.setHours(23, 59, 59);
 
-      return data >= trintaDias;
+      if (dataRegistro > fim) {
+
+        return false;
+
+      }
 
     }
+if (filtroStatus) {
 
+  if (registro.status !== filtroStatus) {
+
+    return false;
+
+  }
+
+}
+
+if (filtroOperador) {
+
+  if (registro.operador !== filtroOperador) {
+
+    return false;
+
+  }
+
+}
     return true;
+
+  })
+
+  .sort((a, b) => {
+
+    if (!a.createdAt || !b.createdAt) return 0;
+
+    return (
+
+      b.createdAt.toDate().getTime() -
+
+      a.createdAt.toDate().getTime()
+
+    );
 
   });
 
@@ -166,24 +198,80 @@ onLogout
 
         <div className="max-w-7xl mx-auto p-6 pb-0">
 
-          <div className="flex justify-end mb-4">
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
 
-            <select
-              value={periodo}
-              onChange={(e) => setPeriodo(e.target.value)}
-              className="bg-white border border-slate-300 rounded-xl px-4 py-3 shadow-sm"
-            >
+  <div className="flex flex-col">
 
-              <option>Hoje</option>
-              <option>7 Dias</option>
-              <option>30 Dias</option>
-              <option>Tudo</option>
+    <label className="text-sm font-semibold text-slate-600 mb-1">
 
-            </select>
+      De
 
-          </div>
+    </label>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <input
+      type="date"
+      value={dataInicio}
+      onChange={(e) => setDataInicio(e.target.value)}
+      className="bg-white border border-slate-300 rounded-2xl px-4 py-3 shadow-sm md:w-64"
+    />
+
+  </div>
+
+  <div className="flex flex-col">
+
+    <label className="text-sm font-semibold text-slate-600 mb-1">
+
+      Até
+
+    </label>
+
+    <input
+      type="date"
+      value={dataFim}
+      onChange={(e) => setDataFim(e.target.value)}
+      className="bg-white border border-slate-300 rounded-2xl px-4 py-3 shadow-sm"
+    />
+
+  </div>
+  <select
+  value={filtroStatus}
+  onChange={(e) => setFiltroStatus(e.target.value)}
+  className="bg-white border border-slate-300 rounded-2xl px-4 py-3 shadow-sm"
+>
+
+  <option value="">Todos Status</option>
+
+  <option>Carregado</option>
+
+  <option>Não Carregado</option>
+
+  <option>Pendente</option>
+
+</select>
+
+<select
+  value={filtroOperador}
+  onChange={(e) => setFiltroOperador(e.target.value)}
+  className="bg-white border border-slate-300 rounded-2xl px-4 py-3 shadow-sm"
+>
+
+  <option value="">Todos Operadores</option>
+
+  {[...new Set(registros.map((r) => r.operador))].map((operador) => (
+
+    <option key={operador}>
+
+      {operador}
+
+    </option>
+
+  ))}
+
+</select>
+
+</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
 
@@ -214,6 +302,7 @@ onLogout
                 {totalPendentes}
 
               </h2>
+              
 
             </div>
 
@@ -232,6 +321,21 @@ onLogout
               </h2>
 
             </div>
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+
+  <p className="text-slate-500 text-sm">
+
+    Não Carregados
+
+  </p>
+
+  <h2 className="text-4xl font-bold text-red-600 mt-2">
+
+    {totalNaoCarregados}
+
+  </h2>
+
+</div>
 
           </div>
 
@@ -302,7 +406,7 @@ onLogout
           <div className="lg:col-span-2">
 
             <RegistroTable
-              registros={registros}
+             registros={registrosFiltrados}
               usuarioLogado={usuarioLogado}
             />
 

@@ -12,9 +12,10 @@ export default function RegistroForm({
 
   const [placa, setPlaca] = useState('');
   const [oc, setOc] = useState('');
-  const [status, setStatus] = useState('Concluído');
+  const [status, setStatus] = useState('Carregado');
   const [isca, setIsca] = useState('Sim');
 const [lona, setLona] = useState('Sim');
+const [pallets, setPallets] = useState('0');
   const [observacao, setObservacao] = useState('');
   const [imagem, setImagem] = useState('');
 
@@ -31,6 +32,7 @@ const [lona, setLona] = useState('Sim');
       status,
       isca,
       lona,
+      pallets,
       observacao,
       imagem
 
@@ -38,7 +40,7 @@ const [lona, setLona] = useState('Sim');
 
     setPlaca('');
     setOc('');
-    setStatus('Concluído');
+    setStatus('Carregado');
     setObservacao('');
     setImagem('');
 
@@ -113,7 +115,8 @@ const [lona, setLona] = useState('Sim');
             className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
           >
 
-            <option>Concluído</option>
+            <option>Carregado</option>
+            <option>Não Carregado</option>
             <option>Pendente</option>
 
           </select>
@@ -165,7 +168,35 @@ const [lona, setLona] = useState('Sim');
 
 </div>
 
+{/* PALLETS */}
 
+<div>
+
+  <label className="block text-sm font-semibold text-slate-700 mb-2">
+
+    PALLETS
+
+  </label>
+
+  <select
+    value={pallets}
+    onChange={(e) => setPallets(e.target.value)}
+    className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
+  >
+
+    {Array.from({ length: 71 }, (_, i) => (
+
+      <option key={i} value={i}>
+
+        {i}
+
+      </option>
+
+    ))}
+
+  </select>
+
+</div>
 
         {/* OBS */}
 
