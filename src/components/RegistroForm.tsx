@@ -13,6 +13,8 @@ export default function RegistroForm({
   const [placa, setPlaca] = useState('');
   const [oc, setOc] = useState('');
   const [status, setStatus] = useState('Concluído');
+  const [isca, setIsca] = useState('Sim');
+const [lona, setLona] = useState('Sim');
   const [observacao, setObservacao] = useState('');
   const [imagem, setImagem] = useState('');
 
@@ -27,6 +29,8 @@ export default function RegistroForm({
       placa,
       oc,
       status,
+      isca,
+      lona,
       observacao,
       imagem
 
@@ -115,6 +119,53 @@ export default function RegistroForm({
           </select>
 
         </div>
+{/* ISCA */}
+
+<div>
+
+  <label className="block text-sm font-semibold text-slate-700 mb-2">
+
+    ISCA
+
+  </label>
+
+  <select
+    value={isca}
+    onChange={(e) => setIsca(e.target.value)}
+    className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
+  >
+
+    <option>Sim</option>
+    <option>Não</option>
+
+  </select>
+
+</div>
+
+{/* LONA */}
+
+<div>
+
+  <label className="block text-sm font-semibold text-slate-700 mb-2">
+
+    LONA
+
+  </label>
+
+  <select
+    value={lona}
+    onChange={(e) => setLona(e.target.value)}
+    className="w-full p-4 bg-white/70 border border-white/50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all duration-300 focus:shadow-lg"
+  >
+
+    <option>Sim</option>
+    <option>Não</option>
+
+  </select>
+
+</div>
+
+
 
         {/* OBS */}
 

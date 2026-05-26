@@ -28,6 +28,8 @@ export default function RegistroTable({
         'Placa',
         'OC',
         'Status',
+        'ISCA',
+        'LONA',
         'Observação',
         'Data'
       ],
@@ -38,7 +40,11 @@ export default function RegistroTable({
         registro.placa,
         registro.oc,
         registro.status,
+registro.isca,
+registro.lona,
 registro.observacao,
+
+
 
 registro.createdAt
   ? registro.createdAt
@@ -108,9 +114,9 @@ registro.createdAt
 
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-full">
 
-        <table className="w-full min-w-[900px]">
+        <table className="min-w-[1200px]">
 
           <thead>
 
@@ -121,6 +127,17 @@ registro.createdAt
               <th className="py-3">Placa</th>
               <th className="py-3">OC</th>
               <th className="py-3">Status</th>
+              <th className="py-3 px-6 whitespace-nowrap text-center">
+
+  ISCA
+
+</th>
+
+<th className="py-3 px-6 whitespace-nowrap text-center">
+
+  LONA
+
+</th>
               <th className="py-3 hidden md:table-cell">Observação</th>
               <th className="py-3 whitespace-nowrap">Data</th>
               <th className="py-3">Ações</th>
@@ -188,21 +205,33 @@ registro.createdAt
 
                 <td>
 
-                  <span
-                    className={`px-3 py-2 rounded-full text-sm font-semibold shadow-sm ${
-                      registro.status === 'Concluído'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-yellow-100 text-yellow-700'
-                    }`}
-                  >
+  <span
+    className={`px-3 py-2 rounded-full text-sm font-semibold shadow-sm ${
+      registro.status === 'Concluído'
+        ? 'bg-green-100 text-green-700'
+        : 'bg-yellow-100 text-yellow-700'
+    }`}
+  >
 
-                    {registro.status === 'Concluído'
-                      ? ' Concluído'
-                      : ' Pendente'}
+    {registro.status === 'Concluído'
+      ? 'Concluído'
+      : 'Pendente'}
 
-                  </span>
+  </span>
 
-                </td>
+</td>
+
+<td className="py-3 px-6 font-semibold text-slate-700 whitespace-nowrap text-center align-middle">
+
+  {registro.isca}
+
+</td>
+
+<td className="py-3 px-6 font-semibold text-slate-700 whitespace-nowrap text-center align-middle">
+
+  {registro.lona}
+
+</td>
 
                 <td className="text-slate-600 hidden md:table-cell">
 
