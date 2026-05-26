@@ -25,8 +25,16 @@ export type Registro = {
 
 export default function App() {
 
-  const [logado, setLogado] = useState(false);
-  const [usuarioLogado, setUsuarioLogado] = useState<any>(null);
+  const usuarioSalvo = localStorage.getItem('usuario');
+
+const [usuarioLogado, setUsuarioLogado] = useState<any>(
+
+  usuarioSalvo ? JSON.parse(usuarioSalvo) : null
+
+);
+
+const [logado, setLogado] = useState(!!usuarioSalvo);
+  
 
   const [registros, setRegistros] = useState<Registro[]>([]);
   useEffect(() => {
@@ -85,8 +93,14 @@ export default function App() {
 
   onLogin={(usuario) => {
 
-    setUsuarioLogado(usuario);
-    setLogado(true);
+   setUsuarioLogado(usuario);
+
+localStorage.setItem(
+  'usuario',
+  JSON.stringify(usuario)
+);
+
+setLogado(true);
 
   }}
 
@@ -101,6 +115,16 @@ export default function App() {
   registros={registros}
   adicionarRegistro={adicionarRegistro}
   usuarioLogado={usuarioLogado}
+
+  onLogout={() => {
+
+  localStorage.removeItem('usuario');
+
+  setUsuarioLogado(null);
+
+  setLogado(false);
+
+}}
 />
 
   );

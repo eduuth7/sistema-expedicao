@@ -7,12 +7,14 @@ type Props = {
   registros: any[];
   adicionarRegistro: (registro: any) => void;
   usuarioLogado: any;
+  onLogout: () => void;
 };
 
 export default function Dashboard({
   registros,
   adicionarRegistro,
-  usuarioLogado
+ usuarioLogado,
+onLogout
 }: Props) {
 
   const [periodo, setPeriodo] = useState('Hoje');
@@ -95,7 +97,10 @@ export default function Dashboard({
 
           <div className="flex items-center gap-3">
 
-            <div className="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center text-xl">
+            <div
+  onClick={() => window.location.reload()}
+  className="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center text-xl cursor-pointer hover:scale-105 transition-transform"
+>
 
               🚚
 
@@ -122,6 +127,17 @@ export default function Dashboard({
           <div className="text-sm text-slate-600">
 
             Sessão iniciada como
+            <button
+
+  onClick={onLogout}
+
+  className="ml-4 bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+
+>
+
+  Sair
+
+</button>
 
             <span className="font-bold text-slate-800 ml-1">
 
